@@ -1,2 +1,11 @@
-package hexlet.code.dto;public class BasicPage {
+package hexlet.code.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BasicPage {
+    private String flash;
+    private String flashType;
 }

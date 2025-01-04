@@ -1,2 +1,15 @@
-package hexlet.code.dto;public class UrlPage {
+package hexlet.code.dto;
+
+import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import java.util.List;
+
+@AllArgsConstructor
+@Getter
+public class UrlPage extends BasicPage {
+    private Url url;
+    private List<UrlCheck> check;
 }
