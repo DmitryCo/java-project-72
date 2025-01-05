@@ -1,8 +1,9 @@
 package hexlet.code;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import hexlet.code.repository.UrlRepository;
 import hexlet.code.repository.UrlCheckRepository;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 import okhttp3.mockwebserver.MockResponse;
@@ -18,12 +19,13 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public final class AppTest {
-    private static Javalin app;
+    Javalin app;
     private static MockWebServer mockServer;
 
     @BeforeEach
-    void startServer() throws SQLException, IOException {
+    public void startServer() throws SQLException, IOException {
         app = App.getApp();
+
     }
 
     private static Path getFixturePath() {
@@ -86,7 +88,7 @@ public final class AppTest {
     }
 
     @Test
-    public void testCheck() throws SQLException {
+    public void testCheck() {
         String testUrl = mockServer.url("/").toString().replaceAll("/$", "");
         JavalinTest.test(app, ((server, client) -> {
             var requestBody = "url=" + testUrl;
