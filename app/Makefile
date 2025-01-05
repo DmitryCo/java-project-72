@@ -1,29 +1,27 @@
 .DEFAULT_GOAL := build-run
 
-clean:
-	./gradlew clean
-
 run-dist:
 	./build/install/app/bin/app
 
 build:
-	./gradlew clean build
-
-install:
-	./gradlew clean install
+	./gradlew build
 
 run:
 	./gradlew run
 
-lint:
-	./gradlew checkstyleMain
-
 test:
 	./gradlew test
+
+lint:
+	./gradlew checkstyleMain checkstyleTest
 
 report:
 	./gradlew jacocoTestReport
 
-build-run: build run
+build-run:
+	build run
+
+start:
+	APP_ENV=development ./gradlew run
 
 .PHONY: build
