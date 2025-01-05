@@ -1,3 +1,6 @@
+@import hexlet.code.dto.MainPage
+@import hexlet.code.util.Routes
+
 @param MainPage page
 
 @template.layout.page(

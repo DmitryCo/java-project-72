@@ -1,10 +1,12 @@
 @import gg.jte.Content
+@import hexlet.code.dto.BasicPage
+@import hexlet.code.util.Routes
 
 @param BasicPage page = null
 @param Content content
 
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,16 +24,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="">Главная</a>
+                <a class="nav-link" href="${Routes.mainPath()}">Главная</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Сайты</a>
+                <a class="nav-link" href="${Routes.urlsPath()}">Сайты</a>
             </li>
         </ul>
     </div>
 </nav>
+<main class="flex-grow-1">
+    @if(page != null && page.getFlash() != null)
+        <div class="rounded-0 m-0 alert alert-success alert-${page.getFlashType()}" role="alert">
+            ${page.getFlash()}
+        </div>
+    @endif
+    ${content}
+</main>
 <footer class="footer border-top py-1 mt-4 bg-light">
-    <p class="text-dark bg-muted text-center">by <a href="https://github.com/DmitryCo" class="text-info">Dmitry_Konstantinov</a></p>
+    <p class="text-dark bg-muted text-center">by <a href="https://github.com/DmitryCo" class="text-info"Dmitry Konstantinov</a></p>
 </footer>
 </body>
 </html>
