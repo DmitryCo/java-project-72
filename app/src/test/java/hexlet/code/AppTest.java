@@ -19,13 +19,12 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public final class AppTest {
-    Javalin app;
+    private static Javalin app;
     private static MockWebServer mockServer;
 
     @BeforeEach
-    public void startServer() throws SQLException, IOException {
+    public void startServer() throws IOException, SQLException {
         app = App.getApp();
-
     }
 
     private static Path getFixturePath() {
