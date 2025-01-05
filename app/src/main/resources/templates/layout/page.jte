@@ -41,7 +41,11 @@
     ${content}
 </main>
 <footer class="footer border-top py-1 mt-4 bg-light">
-    <p class="text-dark bg-muted text-center">by <a href="https://github.com/DmitryCo" class="text-info"Dmitry Konstantinov</a></p>
+        <div class="container-xl">
+            <div class="text-center">
+                <a href="https://github.com/DmitryCo" target="_blank">Dmitry_Konstantinov</a>
+            </div>
+        </div>
 </footer>
 </body>
 </html>
