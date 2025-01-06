@@ -29,7 +29,7 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("gg.jte:jte:3.1.9")
     implementation("com.konghq:unirest-java:3.13.0")
-    implementation ("org.jsoup:jsoup:1.18.3")
+    implementation ("org.jsoup:jsoup:1.18.1")
 }
 
 application {
