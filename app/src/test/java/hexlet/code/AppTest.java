@@ -51,7 +51,7 @@ public final class AppTest {
         mockServer.shutdown();
     }
 
-    /*@Test
+    @Test
     public void testMainPage() {
         JavalinTest.test(app, ((server, client) -> {
             var response = client.get("/");
@@ -84,7 +84,7 @@ public final class AppTest {
             client.get("/urls/00000");
             assertThat(response.code()).isEqualTo(404);
         }));
-    }*/
+    }
 
     @Test
     public void testCheck() {
