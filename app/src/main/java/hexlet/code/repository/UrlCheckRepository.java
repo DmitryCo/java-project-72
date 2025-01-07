@@ -50,7 +50,7 @@ public class UrlCheckRepository extends BaseRepository {
                 String h1 = resultSet.getString("h1");
                 String description = resultSet.getString("description");
                 LocalDateTime createdAt = resultSet.getObject("created_at", LocalDateTime.class);
-                UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
+                UrlCheck urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
                 urlCheck.setCreatedAt(createdAt);
                 result.put(urlId, urlCheck);
             }
@@ -72,7 +72,7 @@ public class UrlCheckRepository extends BaseRepository {
                 String h1 = resultSet.getString("h1");
                 String description = resultSet.getString("description");
                 LocalDateTime createdAt = resultSet.getObject("created_at", LocalDateTime.class);
-                UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
+                UrlCheck urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
                 urlCheck.setCreatedAt(createdAt);
                 result.add(urlCheck);
             }

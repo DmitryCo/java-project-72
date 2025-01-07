@@ -46,7 +46,6 @@ content = @`
             </thead>
             <tbody>
             @for(var check : page.getCheck())
-
                 <tr>
                     <td>
                         ${check.getUrlId()}

@@ -47,7 +47,7 @@ public class UrlPageController {
             String h1 = h1El == null ? "" : h1El.text();
             Element descr = doc.selectFirst("meta[name=description]");
             String description = descr == null ? "" : descr.attr("content");
-            UrlCheck newCheck = new UrlCheck(statusCode, title, h1, description);
+            UrlCheck newCheck = new UrlCheck(id, statusCode, title, h1, description);
 
             newCheck.setUrlId(id);
             newCheck.setCreatedAt(dateTime);
