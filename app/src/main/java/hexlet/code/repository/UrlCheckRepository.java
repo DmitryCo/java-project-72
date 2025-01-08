@@ -30,7 +30,6 @@ public class UrlCheckRepository extends BaseRepository {
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 newCheck.setId(generatedKeys.getLong(1));
-                newCheck.setCreatedAt(dateTime);
             } else {
                 throw new SQLException("Ошибка при сохранении");
             }

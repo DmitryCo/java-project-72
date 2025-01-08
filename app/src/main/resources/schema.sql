@@ -11,7 +11,7 @@ CREATE TABLE urls
 CREATE TABLE url_checks
 (
     id          SERIAL PRIMARY KEY,
-    url_id      BIGINT REFERENCES urls(id),
+    url_id      BIGINT REFERENCES urls(id) ON DELETE CASCADE,
     status_code INTEGER NOT NULL,
     title       VARCHAR(255),
     h1          VARCHAR(255),

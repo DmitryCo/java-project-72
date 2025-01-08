@@ -14,6 +14,5 @@ public class Url {
     private LocalDateTime createdAt;
     public Url(String name) {
         this.name = name;
-        this.createdAt = LocalDateTime.now();
     }
 }
