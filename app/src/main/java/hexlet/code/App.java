@@ -12,12 +12,13 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.javalin.Javalin;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.stream.Collectors;
 import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,12 +37,13 @@ public class App {
                 "jdbc:h2:mem:project");
     }
 
-    private static String readResourceFile(String fileName) throws IOException {
-        var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
+    private static String readResourceFile() throws IOException, URISyntaxException {
+        var resource = App.class.getClassLoader().getResource("schema.sql");
+        if (resource == null) {
+            throw new IOException("Resource not found: " + "schema.sql");
         }
+        Path path = Paths.get(resource.toURI());
+        return Files.readString(path, StandardCharsets.UTF_8);
     }
 
     private static TemplateEngine createTemplateEngine() {
@@ -51,11 +53,11 @@ public class App {
         return TemplateEngine.create(codeResolver, ContentType.Html);
     }
 
-    public static Javalin getApp() throws IOException, SQLException {
+    public static Javalin getApp() throws IOException, SQLException, URISyntaxException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabaseUrl());
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
-        String sql = readResourceFile("schema.sql");
+        String sql = readResourceFile();
         log.info(sql);
 
         try (var connection = dataSource.getConnection();
@@ -76,7 +78,7 @@ public class App {
         return app;
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) throws IOException, SQLException, URISyntaxException {
         var app = getApp();
         app.start(getPort());
     }
