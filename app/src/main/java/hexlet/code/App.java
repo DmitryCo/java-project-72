@@ -12,9 +12,8 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.javalin.Javalin;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
+import java.io.InputStream;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -37,13 +36,13 @@ public class App {
                 "jdbc:h2:mem:project");
     }
 
-    private static String readResourceFile() throws IOException, URISyntaxException {
-        var resource = App.class.getClassLoader().getResource("schema.sql");
-        if (resource == null) {
-            throw new IOException("Resource not found: " + "schema.sql");
+    private static String readResourceFile() throws IOException {
+        try (InputStream inputStream = App.class.getResourceAsStream("/schema.sql")) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: schema.sql");
+            }
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         }
-        Path path = Paths.get(resource.toURI());
-        return Files.readString(path, StandardCharsets.UTF_8);
     }
 
     private static TemplateEngine createTemplateEngine() {
