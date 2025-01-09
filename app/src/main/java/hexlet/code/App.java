@@ -15,7 +15,6 @@ import io.javalin.Javalin;
 import java.io.InputStream;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import io.javalin.rendering.template.JavalinJte;
@@ -52,7 +51,7 @@ public class App {
         return TemplateEngine.create(codeResolver, ContentType.Html);
     }
 
-    public static Javalin getApp() throws IOException, SQLException, URISyntaxException {
+    public static Javalin getApp() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabaseUrl());
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
@@ -77,7 +76,7 @@ public class App {
         return app;
     }
 
-    public static void main(String[] args) throws IOException, SQLException, URISyntaxException {
+    public static void main(String[] args) throws IOException, SQLException {
         var app = getApp();
         app.start(getPort());
     }
