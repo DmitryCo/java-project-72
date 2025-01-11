@@ -48,7 +48,7 @@ content = @`
             @for(var check : page.getCheck())
                 <tr>
                     <td>
-                        ${check.getUrlId()}
+                        ${check.getId()}
                     </td>
                     <td>
                         ${check.getStatusCode()}
