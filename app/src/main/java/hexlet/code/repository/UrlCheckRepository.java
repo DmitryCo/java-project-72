@@ -3,11 +3,11 @@ package hexlet.code.repository;
 import hexlet.code.model.UrlCheck;
 
 import java.sql.Connection;
-import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +37,12 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static Map<Long, UrlCheck> findLatestChecks() throws SQLException {
-        String sql = "SELECT DISTINCT ON (url_id) * from url_checks order by url_id DESC, id DESC";
+        String sql = "SELECT DISTINCT ON (url_id) * from url_checks ORDER BY url_id DESC, id DESC";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            var result = new HashMap<Long, UrlCheck>();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            Map<Long, UrlCheck> result = new HashMap<>();
             while (resultSet.next()) {
                 long urlId = resultSet.getLong("url_id");
                 int statusCode = resultSet.getInt("status_code");
@@ -49,6 +50,7 @@ public class UrlCheckRepository extends BaseRepository {
                 String h1 = resultSet.getString("h1");
                 String description = resultSet.getString("description");
                 LocalDateTime createdAt = resultSet.getObject("created_at", LocalDateTime.class);
+
                 UrlCheck urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
                 urlCheck.setCreatedAt(createdAt);
                 result.put(urlId, urlCheck);
@@ -58,24 +60,27 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findByUrlId(Long urlId) throws SQLException {
-        String sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY id";
+        String sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY id DESC";
+        List<UrlCheck> result = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-            preparedStatement.setLong(1, urlId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            ArrayList<UrlCheck> result = new ArrayList<>();
 
-            while (resultSet.next()) {
-                int statusCode = resultSet.getInt("status_code");
-                String title = resultSet.getString("title");
-                String h1 = resultSet.getString("h1");
-                String description = resultSet.getString("description");
-                LocalDateTime createdAt = resultSet.getObject("created_at", LocalDateTime.class);
-                UrlCheck urlCheck = new UrlCheck(urlId, statusCode, title, h1, description);
-                urlCheck.setCreatedAt(createdAt);
-                result.add(urlCheck);
+            preparedStatement.setLong(1, urlId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Long id = resultSet.getLong("id");
+                    int statusCode = resultSet.getInt("status_code");
+                    String title = resultSet.getString("title");
+                    String h1 = resultSet.getString("h1");
+                    String description = resultSet.getString("description");
+                    LocalDateTime createdAt = resultSet.getObject("created_at", LocalDateTime.class);
+
+                    UrlCheck urlCheck = new UrlCheck(urlId, statusCode, title, h1, description, id);
+                    urlCheck.setCreatedAt(createdAt);
+                    result.add(urlCheck);
+                }
             }
-            return result;
         }
+        return result;
     }
 }
